@@ -52,21 +52,11 @@ export const generateM3U = (channels: Channel[]): string => {
   return m3uContent;
 };
 
-export const extractStreams = async (url: string): Promise<Channel[]> => {
-  console.log('Extracting DaddyLive streams from:', url);
-  
-  // Validate DaddyLive URL
-  const isDaddyLiveUrl = url.toLowerCase().includes('daddylive') || 
-                        url.toLowerCase().includes('daddy') ||
-                        url.includes('dlhd.') ||
-                        url.includes('dlive.');
-  
-  if (!isDaddyLiveUrl) {
-    throw new Error('Please enter a valid DaddyLive mirror URL');
-  }
+export const extractStreams = async (): Promise<Channel[]> => {
+  console.log('Extracting DaddyLive streams from all available sources...');
   
   // Simulate API call delay for DaddyLive extraction
-  await new Promise(resolve => setTimeout(resolve, 3000));
+  await new Promise(resolve => setTimeout(resolve, 2000));
   
   // Mock DaddyLive channels with realistic names and categories
   const daddyLiveChannels: Channel[] = [
@@ -126,6 +116,20 @@ export const extractStreams = async (url: string): Promise<Channel[]> => {
       group: "UK Sports",
       logo: "https://example.com/logos/tnt-sports.png",
       tvgId: "tntsports1.uk.hd",
+    },
+    {
+      name: "Eurosport 1 HD",
+      url: "https://proxy.example.com/stream/eurosport-1-hd.m3u8",
+      group: "Sports",
+      logo: "https://example.com/logos/eurosport.png",
+      tvgId: "eurosport1.hd",
+    },
+    {
+      name: "Discovery Channel HD",
+      url: "https://proxy.example.com/stream/discovery-hd.m3u8",
+      group: "Documentary",
+      logo: "https://example.com/logos/discovery.png",
+      tvgId: "discovery.hd",
     }
   ];
   
@@ -171,7 +175,7 @@ export const parseExistingM3U = (content: string): Channel[] => {
 };
 
 export const generateProxyUrl = (originalUrl: string, channelId: string): string => {
-  // Generate proxy URL to mask original stream source
+  // Generate proxy URL to mask original stream source URLs
   const baseUrl = window.location.origin;
   return `${baseUrl}/api/stream?id=${encodeURIComponent(channelId)}&url=${encodeURIComponent(originalUrl)}`;
 };

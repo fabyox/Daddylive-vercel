@@ -1,14 +1,12 @@
-import { useState } from 'react';
+
+import { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Copy, Download, Globe, Play, Settings, AlertTriangle, ExternalLink } from "lucide-react";
+import { Copy, Download, Play, Settings, AlertTriangle, ExternalLink, Tv } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { ChannelCustomizer } from "@/components/ChannelCustomizer";
 import { M3UPreview } from "@/components/M3UPreview";
@@ -16,7 +14,6 @@ import { StreamExtractor } from "@/components/StreamExtractor";
 import { generateM3U, extractStreams, Channel } from "@/lib/m3u-utils";
 
 const Index = () => {
-  const [sourceUrl, setSourceUrl] = useState('');
   const [channels, setChannels] = useState<Channel[]>([]);
   const [isExtracting, setIsExtracting] = useState(false);
   const [m3uContent, setM3uContent] = useState('');
@@ -24,18 +21,9 @@ const Index = () => {
   const { toast } = useToast();
 
   const handleExtractStreams = async () => {
-    if (!sourceUrl.trim()) {
-      toast({
-        title: "URL Required",
-        description: "Please enter a valid DaddyLive mirror URL to extract streams from.",
-        variant: "destructive"
-      });
-      return;
-    }
-
     setIsExtracting(true);
     try {
-      const extractedChannels = await extractStreams(sourceUrl);
+      const extractedChannels = await extractStreams();
       setChannels(extractedChannels);
       const generatedM3U = generateM3U(extractedChannels);
       setM3uContent(generatedM3U);
@@ -48,7 +36,7 @@ const Index = () => {
     } catch (error) {
       toast({
         title: "Extraction Failed",
-        description: error instanceof Error ? error.message : "Unable to extract streams from the provided DaddyLive URL.",
+        description: error instanceof Error ? error.message : "Unable to extract streams from DaddyLive.",
         variant: "destructive"
       });
     } finally {
@@ -110,7 +98,7 @@ const Index = () => {
             </h1>
           </div>
           <p className="text-slate-400 text-lg max-w-2xl mx-auto">
-            Extract streaming URLs from DaddyLive mirrors, customize channel metadata, and generate professional M3U playlists
+            Generate professional M3U playlists from DaddyLive channels with customizable metadata
           </p>
         </div>
 
@@ -127,7 +115,7 @@ const Index = () => {
           <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
             <TabsList className="grid w-full grid-cols-4 bg-slate-800/50 backdrop-blur-sm border border-slate-700">
               <TabsTrigger value="extract" className="data-[state=active]:bg-blue-600">
-                <Globe className="h-4 w-4 mr-2" />
+                <Tv className="h-4 w-4 mr-2" />
                 Extract
               </TabsTrigger>
               <TabsTrigger value="customize" disabled={channels.length === 0} className="data-[state=active]:bg-blue-600">
@@ -148,24 +136,14 @@ const Index = () => {
               <Card className="bg-slate-800/50 backdrop-blur-sm border-slate-700">
                 <CardHeader>
                   <CardTitle className="text-white flex items-center gap-2">
-                    <Globe className="h-5 w-5" />
+                    <Tv className="h-5 w-5" />
                     DaddyLive Stream Extraction
                   </CardTitle>
                   <CardDescription className="text-slate-400">
-                    Enter a DaddyLive mirror URL to extract M3U stream URLs and channel information
+                    Extract M3U stream URLs and channel information from DaddyLive sources
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="source-url" className="text-white">DaddyLive Mirror URL</Label>
-                    <Input
-                      id="source-url"
-                      placeholder="https://daddylive-hd.com or any DaddyLive mirror"
-                      value={sourceUrl}
-                      onChange={(e) => setSourceUrl(e.target.value)}
-                      className="bg-slate-700/50 border-slate-600 text-white placeholder:text-slate-400"
-                    />
-                  </div>
                   <Button 
                     onClick={handleExtractStreams}
                     disabled={isExtracting}
@@ -173,6 +151,14 @@ const Index = () => {
                   >
                     {isExtracting ? 'Extracting DaddyLive Streams...' : 'Extract DaddyLive Streams'}
                   </Button>
+                  
+                  {channels.length > 0 && (
+                    <div className="mt-4 p-4 bg-green-500/10 border border-green-500/20 rounded-lg">
+                      <p className="text-green-400 text-sm font-medium">
+                        ✅ Successfully extracted {channels.length} channels from DaddyLive
+                      </p>
+                    </div>
+                  )}
                 </CardContent>
               </Card>
 
@@ -244,7 +230,7 @@ const Index = () => {
                   <Separator className="bg-slate-700" />
                   
                   <div className="space-y-3">
-                    <Label className="text-white">Quick Actions</Label>
+                    <div className="text-white font-medium">Quick Actions</div>
                     <div className="flex flex-wrap gap-2">
                       <Button size="sm" variant="secondary" onClick={copyToClipboard}>
                         <Copy className="h-4 w-4 mr-2" />

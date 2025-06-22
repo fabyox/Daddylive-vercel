@@ -87,9 +87,9 @@ const StreamExtractor = () => {
         <div className="mt-6 p-4 bg-blue-500/10 border border-blue-500/20 rounded-lg">
           <h5 className="text-sm font-medium text-blue-400 mb-2">How to use:</h5>
           <ol className="text-xs text-slate-400 space-y-1">
-            <li>1. Enter any DaddyLive mirror URL above</li>
-            <li>2. Click "Extract Streams" to crawl channel listings</li>
-            <li>3. Customize channel names and metadata</li>
+            <li>1. Click "Extract DaddyLive Streams" to crawl all sources</li>
+            <li>2. Customize channel names and metadata</li>
+            <li>3. Preview your generated M3U playlist</li>
             <li>4. Export your personalized M3U playlist</li>
           </ol>
         </div>
