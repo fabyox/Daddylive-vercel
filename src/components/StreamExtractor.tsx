@@ -1,7 +1,7 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Tv, Globe, Zap, Shield } from "lucide-react";
+import { Tv, Globe, Zap, Shield, Lock } from "lucide-react";
 
 const StreamExtractor = () => {
   const supportedSources = [
@@ -55,7 +55,7 @@ const StreamExtractor = () => {
           DaddyLive Sources Status
         </CardTitle>
         <CardDescription className="text-slate-400">
-          Real-time status of DaddyLive mirror domains and available channels
+          Real-time status of DaddyLive mirror domains with private URL generation
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -100,15 +100,15 @@ const StreamExtractor = () => {
           <ol className="text-xs text-slate-400 space-y-1">
             <li>1. Click "Extract DaddyLive Streams" to scan all active sources</li>
             <li>2. System crawls and validates stream URLs automatically</li>
-            <li>3. Customize channel names, groups, and EPG data</li>
-            <li>4. Export your professional M3U playlist</li>
+            <li>3. Original URLs are converted to private proxy endpoints</li>
+            <li>4. Export your secure M3U playlist with masked URLs</li>
           </ol>
         </div>
 
-        <div className="mt-4 p-3 bg-amber-500/10 border border-amber-500/20 rounded-lg">
-          <p className="text-xs text-amber-300">
-            <Shield className="h-3 w-3 inline mr-1" />
-            Stream URLs are automatically validated and proxy-wrapped for reliability
+        <div className="mt-4 p-3 bg-green-500/10 border border-green-500/20 rounded-lg">
+          <p className="text-xs text-green-300 flex items-center">
+            <Lock className="h-3 w-3 inline mr-1" />
+            All stream URLs are automatically converted to private proxy endpoints for enhanced security
           </p>
         </div>
       </CardContent>

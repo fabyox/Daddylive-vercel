@@ -1,4 +1,3 @@
-
 export interface Channel {
   name: string;
   url: string;
@@ -12,7 +11,7 @@ export interface Channel {
 export const generateM3U = (channels: Channel[]): string => {
   let m3uContent = '#EXTM3U\n\n';
   
-  channels.forEach((channel) => {
+  channels.forEach((channel, index) => {
     // Build EXTINF line with attributes
     let extinf = '#EXTINF:-1';
     
@@ -37,13 +36,17 @@ export const generateM3U = (channels: Channel[]): string => {
     extinf += `,${channel.name}`;
     
     m3uContent += extinf + '\n';
-    m3uContent += channel.url + '\n\n';
     
-    // Add backup URLs as comments for reference
+    // Generate private proxy URL instead of direct URL
+    const privateUrl = generateProxyUrl(channel.url, `ch_${index}_${channel.tvgId || channel.name.toLowerCase().replace(/\s+/g, '_')}`);
+    m3uContent += privateUrl + '\n\n';
+    
+    // Add backup URLs as proxy URLs too
     if (channel.backupUrls && channel.backupUrls.length > 0) {
-      channel.backupUrls.forEach((backupUrl, index) => {
+      channel.backupUrls.forEach((backupUrl, backupIndex) => {
         if (backupUrl.trim()) {
-          m3uContent += `#BACKUP${index + 1}: ${backupUrl}\n`;
+          const backupProxyUrl = generateProxyUrl(backupUrl, `ch_${index}_backup_${backupIndex}`);
+          m3uContent += `#BACKUP${backupIndex + 1}: ${backupProxyUrl}\n`;
         }
       });
       m3uContent += '\n';
@@ -51,6 +54,18 @@ export const generateM3U = (channels: Channel[]): string => {
   });
   
   return m3uContent;
+};
+
+// Generate secure proxy URLs that mask the original DaddyLive sources
+export const generateProxyUrl = (originalUrl: string, channelId: string): string => {
+  // Create a secure proxy endpoint that masks the original stream source
+  const baseUrl = window.location.origin;
+  const encodedChannelId = btoa(channelId).replace(/[+/=]/g, (match) => {
+    return { '+': '-', '/': '_', '=': '' }[match] || match;
+  });
+  
+  // Generate a private streaming endpoint that doesn't expose the original URL
+  return `${baseUrl}/api/stream/${encodedChannelId}`;
 };
 
 // Simulate real DaddyLive extraction with more realistic implementation
@@ -189,12 +204,6 @@ export const parseExistingM3U = (content: string): Channel[] => {
   }
   
   return channels;
-};
-
-export const generateProxyUrl = (originalUrl: string, channelId: string): string => {
-  // Generate proxy URL to mask original stream source URLs
-  const baseUrl = window.location.origin;
-  return `${baseUrl}/api/stream?id=${encodeURIComponent(channelId)}&url=${encodeURIComponent(originalUrl)}`;
 };
 
 export const validateM3U = (content: string): { isValid: boolean; errors: string[] } => {
