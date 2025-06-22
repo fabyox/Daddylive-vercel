@@ -1,37 +1,33 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Globe, Tv, Radio, Film } from "lucide-react";
+import { Tv } from "lucide-react";
 
 const StreamExtractor = () => {
   const supportedSources = [
     {
-      name: "DaddyLive Mirrors",
+      name: "DaddyLive HD",
       type: "Live TV",
       icon: Tv,
-      description: "Extract live TV channel streams",
-      status: "Supported"
+      description: "Extract live TV channels from DaddyLive HD mirror",
+      status: "Supported",
+      url: "daddylive-hd.com"
     },
     {
-      name: "M3U Playlists",
-      type: "Playlist",
-      icon: Radio,
-      description: "Parse existing M3U files",
-      status: "Supported"
+      name: "DaddyLive TV",
+      type: "Live TV", 
+      icon: Tv,
+      description: "Extract channels from DaddyLive TV mirror",
+      status: "Supported",
+      url: "daddylive.tv"
     },
     {
-      name: "Stream Directories",
-      type: "Directory",
-      icon: Globe,
-      description: "Crawl streaming directories",
-      status: "Beta"
-    },
-    {
-      name: "Video Platforms",
-      type: "Platform",
-      icon: Film,
-      description: "Extract from video platforms",
-      status: "Coming Soon"
+      name: "DaddyLive Stream",
+      type: "Live TV",
+      icon: Tv,
+      description: "Extract from DaddyLive streaming mirror",
+      status: "Supported", 
+      url: "daddylivestream.com"
     }
   ];
 
@@ -51,13 +47,13 @@ const StreamExtractor = () => {
   return (
     <Card className="bg-slate-800/50 backdrop-blur-sm border-slate-700">
       <CardHeader>
-        <CardTitle className="text-white">Supported Sources</CardTitle>
+        <CardTitle className="text-white">DaddyLive Sources</CardTitle>
         <CardDescription className="text-slate-400">
-          Currently supported streaming sources and formats
+          Supported DaddyLive mirror domains for stream extraction
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4">
           {supportedSources.map((source, index) => {
             const IconComponent = source.icon;
             return (
@@ -72,7 +68,7 @@ const StreamExtractor = () => {
                     </div>
                     <div>
                       <h4 className="font-medium text-white">{source.name}</h4>
-                      <p className="text-sm text-slate-400">{source.type}</p>
+                      <p className="text-sm text-slate-400">{source.url}</p>
                     </div>
                   </div>
                   <Badge 
@@ -86,6 +82,16 @@ const StreamExtractor = () => {
               </div>
             );
           })}
+        </div>
+        
+        <div className="mt-6 p-4 bg-blue-500/10 border border-blue-500/20 rounded-lg">
+          <h5 className="text-sm font-medium text-blue-400 mb-2">How to use:</h5>
+          <ol className="text-xs text-slate-400 space-y-1">
+            <li>1. Enter any DaddyLive mirror URL above</li>
+            <li>2. Click "Extract Streams" to crawl channel listings</li>
+            <li>3. Customize channel names and metadata</li>
+            <li>4. Export your personalized M3U playlist</li>
+          </ol>
         </div>
       </CardContent>
     </Card>

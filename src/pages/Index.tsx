@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -28,7 +27,7 @@ const Index = () => {
     if (!sourceUrl.trim()) {
       toast({
         title: "URL Required",
-        description: "Please enter a valid URL to extract streams from.",
+        description: "Please enter a valid DaddyLive mirror URL to extract streams from.",
         variant: "destructive"
       });
       return;
@@ -43,13 +42,13 @@ const Index = () => {
       setActiveTab('customize');
       
       toast({
-        title: "Streams Extracted",
-        description: `Found ${extractedChannels.length} channels`,
+        title: "DaddyLive Streams Extracted",
+        description: `Found ${extractedChannels.length} channels from DaddyLive`,
       });
     } catch (error) {
       toast({
         title: "Extraction Failed",
-        description: "Unable to extract streams from the provided URL.",
+        description: error instanceof Error ? error.message : "Unable to extract streams from the provided DaddyLive URL.",
         variant: "destructive"
       });
     } finally {
@@ -85,7 +84,7 @@ const Index = () => {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'playlist.m3u';
+    a.download = 'daddylive-playlist.m3u';
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -93,7 +92,7 @@ const Index = () => {
     
     toast({
       title: "Downloaded!",
-      description: "M3U playlist file downloaded successfully",
+      description: "DaddyLive M3U playlist file downloaded successfully",
     });
   };
 
@@ -107,11 +106,11 @@ const Index = () => {
               <Play className="h-8 w-8 text-white" />
             </div>
             <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-              M3U Playlist Generator
+              DaddyLive M3U Generator
             </h1>
           </div>
           <p className="text-slate-400 text-lg max-w-2xl mx-auto">
-            Extract streaming URLs, customize channel metadata, and generate professional M3U playlists
+            Extract streaming URLs from DaddyLive mirrors, customize channel metadata, and generate professional M3U playlists
           </p>
         </div>
 
@@ -150,18 +149,18 @@ const Index = () => {
                 <CardHeader>
                   <CardTitle className="text-white flex items-center gap-2">
                     <Globe className="h-5 w-5" />
-                    Stream Source Extraction
+                    DaddyLive Stream Extraction
                   </CardTitle>
                   <CardDescription className="text-slate-400">
-                    Enter a URL to extract M3U stream URLs or channel information
+                    Enter a DaddyLive mirror URL to extract M3U stream URLs and channel information
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="source-url" className="text-white">Source URL</Label>
+                    <Label htmlFor="source-url" className="text-white">DaddyLive Mirror URL</Label>
                     <Input
                       id="source-url"
-                      placeholder="https://example.com/streams"
+                      placeholder="https://daddylive-hd.com or any DaddyLive mirror"
                       value={sourceUrl}
                       onChange={(e) => setSourceUrl(e.target.value)}
                       className="bg-slate-700/50 border-slate-600 text-white placeholder:text-slate-400"
@@ -172,7 +171,7 @@ const Index = () => {
                     disabled={isExtracting}
                     className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
                   >
-                    {isExtracting ? 'Extracting...' : 'Extract Streams'}
+                    {isExtracting ? 'Extracting DaddyLive Streams...' : 'Extract DaddyLive Streams'}
                   </Button>
                 </CardContent>
               </Card>

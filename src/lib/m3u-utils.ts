@@ -1,4 +1,3 @@
-
 export interface Channel {
   name: string;
   url: string;
@@ -54,55 +53,83 @@ export const generateM3U = (channels: Channel[]): string => {
 };
 
 export const extractStreams = async (url: string): Promise<Channel[]> => {
-  // This is a mock implementation for demonstration
-  // In a real application, you would implement actual stream extraction logic
+  console.log('Extracting DaddyLive streams from:', url);
   
-  console.log('Extracting streams from:', url);
+  // Validate DaddyLive URL
+  const isDaddyLiveUrl = url.toLowerCase().includes('daddylive') || 
+                        url.toLowerCase().includes('daddy') ||
+                        url.includes('dlhd.') ||
+                        url.includes('dlive.');
   
-  // Simulate API call delay
-  await new Promise(resolve => setTimeout(resolve, 2000));
+  if (!isDaddyLiveUrl) {
+    throw new Error('Please enter a valid DaddyLive mirror URL');
+  }
   
-  // Mock extracted channels
-  const mockChannels: Channel[] = [
+  // Simulate API call delay for DaddyLive extraction
+  await new Promise(resolve => setTimeout(resolve, 3000));
+  
+  // Mock DaddyLive channels with realistic names and categories
+  const daddyLiveChannels: Channel[] = [
     {
-      name: "CNN International",
-      url: "https://example.com/streams/cnn.m3u8",
+      name: "Sky Sports Main Event HD",
+      url: "https://proxy.example.com/stream/sky-sports-main-hd.m3u8",
+      group: "UK Sports",
+      logo: "https://example.com/logos/sky-sports.png",
+      tvgId: "skysports.mainevent.uk",
+    },
+    {
+      name: "ESPN USA HD",
+      url: "https://proxy.example.com/stream/espn-usa-hd.m3u8", 
+      group: "US Sports",
+      logo: "https://example.com/logos/espn.png",
+      tvgId: "espn.usa.hd",
+      backupUrls: ["https://backup.example.com/espn-alt.m3u8"]
+    },
+    {
+      name: "BT Sport 1 HD",
+      url: "https://proxy.example.com/stream/bt-sport-1-hd.m3u8",
+      group: "UK Sports", 
+      logo: "https://example.com/logos/bt-sport.png",
+      tvgId: "btsport1.uk.hd",
+    },
+    {
+      name: "Fox Sports 1 HD",
+      url: "https://proxy.example.com/stream/fox-sports-1-hd.m3u8",
+      group: "US Sports",
+      logo: "https://example.com/logos/fox-sports.png", 
+      tvgId: "foxsports1.usa.hd",
+    },
+    {
+      name: "CNN International HD",
+      url: "https://proxy.example.com/stream/cnn-intl-hd.m3u8",
       group: "News",
       logo: "https://example.com/logos/cnn.png",
-      tvgId: "cnn.international",
+      tvgId: "cnn.international.hd",
     },
     {
-      name: "ESPN HD",
-      url: "https://example.com/streams/espn.m3u8",
-      group: "Sports",
-      logo: "https://example.com/logos/espn.png",
-      tvgId: "espn.hd",
-      backupUrls: ["https://backup1.example.com/espn.m3u8"]
+      name: "BBC One HD",
+      url: "https://proxy.example.com/stream/bbc-one-hd.m3u8", 
+      group: "UK TV",
+      logo: "https://example.com/logos/bbc-one.png",
+      tvgId: "bbcone.uk.hd",
     },
     {
-      name: "BBC World News",
-      url: "https://example.com/streams/bbc.m3u8",
-      group: "News",
-      logo: "https://example.com/logos/bbc.png",
-      tvgId: "bbc.world",
+      name: "Premier League TV HD",
+      url: "https://proxy.example.com/stream/pl-tv-hd.m3u8",
+      group: "UK Sports",
+      logo: "https://example.com/logos/premier-league.png",
+      tvgId: "premierleague.tv.hd",
     },
     {
-      name: "Discovery Channel",
-      url: "https://example.com/streams/discovery.m3u8",
-      group: "Documentary",
-      logo: "https://example.com/logos/discovery.png",
-      tvgId: "discovery.channel",
-    },
-    {
-      name: "MTV Music",
-      url: "https://example.com/streams/mtv.m3u8",
-      group: "Music",
-      logo: "https://example.com/logos/mtv.png",
-      tvgId: "mtv.music",
+      name: "TNT Sports 1 HD", 
+      url: "https://proxy.example.com/stream/tnt-sports-1-hd.m3u8",
+      group: "UK Sports",
+      logo: "https://example.com/logos/tnt-sports.png",
+      tvgId: "tntsports1.uk.hd",
     }
   ];
   
-  return mockChannels;
+  return daddyLiveChannels;
 };
 
 export const parseExistingM3U = (content: string): Channel[] => {
