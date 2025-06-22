@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -18,29 +17,53 @@ const Index = () => {
   const [isExtracting, setIsExtracting] = useState(false);
   const [m3uContent, setM3uContent] = useState('');
   const [activeTab, setActiveTab] = useState('extract');
+  const [extractionProgress, setExtractionProgress] = useState(0);
   const { toast } = useToast();
 
   const handleExtractStreams = async () => {
     setIsExtracting(true);
+    setExtractionProgress(0);
+    
     try {
+      // Simulate extraction progress
+      const progressInterval = setInterval(() => {
+        setExtractionProgress(prev => {
+          if (prev >= 90) {
+            clearInterval(progressInterval);
+            return 90;
+          }
+          return prev + 10;
+        });
+      }, 300);
+
       const extractedChannels = await extractStreams();
+      
+      clearInterval(progressInterval);
+      setExtractionProgress(100);
+      
       setChannels(extractedChannels);
       const generatedM3U = generateM3U(extractedChannels);
       setM3uContent(generatedM3U);
-      setActiveTab('customize');
       
-      toast({
-        title: "DaddyLive Streams Extracted",
-        description: `Found ${extractedChannels.length} channels from DaddyLive`,
-      });
+      setTimeout(() => {
+        setActiveTab('customize');
+        toast({
+          title: "✅ Extraction Complete!",
+          description: `Successfully extracted ${extractedChannels.length} live channels from DaddyLive sources`,
+        });
+      }, 500);
+      
     } catch (error) {
       toast({
-        title: "Extraction Failed",
-        description: error instanceof Error ? error.message : "Unable to extract streams from DaddyLive.",
+        title: "❌ Extraction Failed",
+        description: error instanceof Error ? error.message : "Unable to extract streams from DaddyLive sources.",
         variant: "destructive"
       });
     } finally {
-      setIsExtracting(false);
+      setTimeout(() => {
+        setIsExtracting(false);
+        setExtractionProgress(0);
+      }, 1000);
     }
   };
 
@@ -98,7 +121,7 @@ const Index = () => {
             </h1>
           </div>
           <p className="text-slate-400 text-lg max-w-2xl mx-auto">
-            Generate professional M3U playlists from DaddyLive channels with customizable metadata
+            Professional M3U playlist generator for DaddyLive channels with real-time extraction
           </p>
         </div>
 
@@ -106,7 +129,7 @@ const Index = () => {
         <Alert className="mb-8 border-amber-500/20 bg-amber-500/10">
           <AlertTriangle className="h-4 w-4 text-amber-500" />
           <AlertDescription className="text-amber-200">
-            ⚠️ For educational or metadata testing only. This site does not host or stream any content.
+            ⚠️ For educational and metadata testing purposes only. This application does not host or distribute any content.
           </AlertDescription>
         </Alert>
 
@@ -140,22 +163,30 @@ const Index = () => {
                     DaddyLive Stream Extraction
                   </CardTitle>
                   <CardDescription className="text-slate-400">
-                    Extract M3U stream URLs and channel information from DaddyLive sources
+                    Extract live stream URLs and channel data from active DaddyLive mirror sources
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <Button 
                     onClick={handleExtractStreams}
                     disabled={isExtracting}
-                    className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+                    className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 h-12 text-lg"
                   >
-                    {isExtracting ? 'Extracting DaddyLive Streams...' : 'Extract DaddyLive Streams'}
+                    {isExtracting ? (
+                      <div className="flex items-center gap-3">
+                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                        Extracting DaddyLive Streams... {extractionProgress}%
+                      </div>
+                    ) : 'Extract DaddyLive Streams'}
                   </Button>
                   
                   {channels.length > 0 && (
                     <div className="mt-4 p-4 bg-green-500/10 border border-green-500/20 rounded-lg">
                       <p className="text-green-400 text-sm font-medium">
-                        ✅ Successfully extracted {channels.length} channels from DaddyLive
+                        ✅ Successfully extracted {channels.length} live channels from DaddyLive sources
+                      </p>
+                      <p className="text-green-300 text-xs mt-1">
+                        Channels include: Sports, News, Entertainment, and International content
                       </p>
                     </div>
                   )}

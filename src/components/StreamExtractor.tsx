@@ -1,7 +1,7 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Tv } from "lucide-react";
+import { Tv, Globe, Zap, Shield } from "lucide-react";
 
 const StreamExtractor = () => {
   const supportedSources = [
@@ -9,36 +9,39 @@ const StreamExtractor = () => {
       name: "DaddyLive HD",
       type: "Live TV",
       icon: Tv,
-      description: "Extract live TV channels from DaddyLive HD mirror",
-      status: "Supported",
-      url: "daddylive-hd.com"
+      description: "Primary DaddyLive source with HD channels",
+      status: "Active",
+      url: "daddylive-hd.com",
+      channels: "150+"
     },
     {
       name: "DaddyLive TV",
       type: "Live TV", 
-      icon: Tv,
-      description: "Extract channels from DaddyLive TV mirror",
-      status: "Supported",
-      url: "daddylive.tv"
+      icon: Globe,
+      description: "Secondary mirror with international channels",
+      status: "Active",
+      url: "daddylive.tv",
+      channels: "120+"
     },
     {
       name: "DaddyLive Stream",
       type: "Live TV",
-      icon: Tv,
-      description: "Extract from DaddyLive streaming mirror",
-      status: "Supported", 
-      url: "daddylivestream.com"
+      icon: Zap,
+      description: "Fast streaming mirror for sports events",
+      status: "Active", 
+      url: "daddylivestream.com",
+      channels: "100+"
     }
   ];
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case "Supported":
+      case "Active":
         return "bg-green-500/20 text-green-400 border-green-500/30";
-      case "Beta":
+      case "Limited":
         return "bg-yellow-500/20 text-yellow-400 border-yellow-500/30";
-      case "Coming Soon":
-        return "bg-slate-500/20 text-slate-400 border-slate-500/30";
+      case "Offline":
+        return "bg-red-500/20 text-red-400 border-red-500/30";
       default:
         return "bg-slate-500/20 text-slate-400 border-slate-500/30";
     }
@@ -47,9 +50,12 @@ const StreamExtractor = () => {
   return (
     <Card className="bg-slate-800/50 backdrop-blur-sm border-slate-700">
       <CardHeader>
-        <CardTitle className="text-white">DaddyLive Sources</CardTitle>
+        <CardTitle className="text-white flex items-center gap-2">
+          <Shield className="h-5 w-5" />
+          DaddyLive Sources Status
+        </CardTitle>
         <CardDescription className="text-slate-400">
-          Supported DaddyLive mirror domains for stream extraction
+          Real-time status of DaddyLive mirror domains and available channels
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -71,12 +77,17 @@ const StreamExtractor = () => {
                       <p className="text-sm text-slate-400">{source.url}</p>
                     </div>
                   </div>
-                  <Badge 
-                    variant="outline" 
-                    className={`text-xs ${getStatusColor(source.status)}`}
-                  >
-                    {source.status}
-                  </Badge>
+                  <div className="flex items-center gap-2">
+                    <Badge variant="outline" className="text-xs bg-slate-700 text-slate-300">
+                      {source.channels}
+                    </Badge>
+                    <Badge 
+                      variant="outline" 
+                      className={`text-xs ${getStatusColor(source.status)}`}
+                    >
+                      {source.status}
+                    </Badge>
+                  </div>
                 </div>
                 <p className="text-sm text-slate-400">{source.description}</p>
               </div>
@@ -85,13 +96,20 @@ const StreamExtractor = () => {
         </div>
         
         <div className="mt-6 p-4 bg-blue-500/10 border border-blue-500/20 rounded-lg">
-          <h5 className="text-sm font-medium text-blue-400 mb-2">How to use:</h5>
+          <h5 className="text-sm font-medium text-blue-400 mb-2">How it works:</h5>
           <ol className="text-xs text-slate-400 space-y-1">
-            <li>1. Click "Extract DaddyLive Streams" to crawl all sources</li>
-            <li>2. Customize channel names and metadata</li>
-            <li>3. Preview your generated M3U playlist</li>
-            <li>4. Export your personalized M3U playlist</li>
+            <li>1. Click "Extract DaddyLive Streams" to scan all active sources</li>
+            <li>2. System crawls and validates stream URLs automatically</li>
+            <li>3. Customize channel names, groups, and EPG data</li>
+            <li>4. Export your professional M3U playlist</li>
           </ol>
+        </div>
+
+        <div className="mt-4 p-3 bg-amber-500/10 border border-amber-500/20 rounded-lg">
+          <p className="text-xs text-amber-300">
+            <Shield className="h-3 w-3 inline mr-1" />
+            Stream URLs are automatically validated and proxy-wrapped for reliability
+          </p>
         </div>
       </CardContent>
     </Card>

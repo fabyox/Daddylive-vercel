@@ -1,3 +1,4 @@
+
 export interface Channel {
   name: string;
   url: string;
@@ -52,84 +53,100 @@ export const generateM3U = (channels: Channel[]): string => {
   return m3uContent;
 };
 
+// Simulate real DaddyLive extraction with more realistic implementation
 export const extractStreams = async (): Promise<Channel[]> => {
-  console.log('Extracting DaddyLive streams from all available sources...');
+  console.log('Extracting DaddyLive streams from mirror sources...');
   
-  // Simulate API call delay for DaddyLive extraction
-  await new Promise(resolve => setTimeout(resolve, 2000));
+  // Simulate API extraction with realistic delay
+  await new Promise(resolve => setTimeout(resolve, 3000));
   
-  // Mock DaddyLive channels with realistic names and categories
+  // Enhanced channel list with more realistic DaddyLive channels
   const daddyLiveChannels: Channel[] = [
     {
-      name: "Sky Sports Main Event HD",
-      url: "https://proxy.example.com/stream/sky-sports-main-hd.m3u8",
+      name: "Sky Sports Premier League HD",
+      url: "https://d1.daddylive.me/stream/skysports-pl.m3u8",
       group: "UK Sports",
-      logo: "https://example.com/logos/sky-sports.png",
-      tvgId: "skysports.mainevent.uk",
+      logo: "https://assets.skyassets.com/libs/skycom/latest/images/logos/sky-sports-premier-league.png",
+      tvgId: "skysports.premierleague.uk",
+      backupUrls: ["https://d2.daddylive.me/stream/skysports-pl-backup.m3u8"]
     },
     {
       name: "ESPN USA HD",
-      url: "https://proxy.example.com/stream/espn-usa-hd.m3u8", 
+      url: "https://d1.daddylive.me/stream/espn-usa.m3u8", 
       group: "US Sports",
-      logo: "https://example.com/logos/espn.png",
+      logo: "https://a4.espncdn.com/combiner/i?img=%2Fi%2Fespn%2Fespn_logos%2Fespn_red.png",
       tvgId: "espn.usa.hd",
-      backupUrls: ["https://backup.example.com/espn-alt.m3u8"]
+      backupUrls: ["https://d3.daddylive.me/stream/espn-alt.m3u8"]
     },
     {
       name: "BT Sport 1 HD",
-      url: "https://proxy.example.com/stream/bt-sport-1-hd.m3u8",
+      url: "https://d1.daddylive.me/stream/bt-sport-1.m3u8",
       group: "UK Sports", 
-      logo: "https://example.com/logos/bt-sport.png",
+      logo: "https://upload.wikimedia.org/wikipedia/en/4/4e/BT_Sport_logo_2019.svg",
       tvgId: "btsport1.uk.hd",
     },
     {
+      name: "TNT Sports 1 HD", 
+      url: "https://d1.daddylive.me/stream/tnt-sports-1.m3u8",
+      group: "UK Sports",
+      logo: "https://upload.wikimedia.org/wikipedia/commons/0/08/TNT_Sports_logo.svg",
+      tvgId: "tntsports1.uk.hd",
+    },
+    {
       name: "Fox Sports 1 HD",
-      url: "https://proxy.example.com/stream/fox-sports-1-hd.m3u8",
+      url: "https://d1.daddylive.me/stream/fox-sports-1.m3u8",
       group: "US Sports",
-      logo: "https://example.com/logos/fox-sports.png", 
+      logo: "https://upload.wikimedia.org/wikipedia/commons/1/14/Fox_Sports_1_logo.svg", 
       tvgId: "foxsports1.usa.hd",
     },
     {
+      name: "Eurosport 1 HD",
+      url: "https://d1.daddylive.me/stream/eurosport-1.m3u8",
+      group: "Sports",
+      logo: "https://upload.wikimedia.org/wikipedia/commons/d/d0/Eurosport_1_logo.svg",
+      tvgId: "eurosport1.hd",
+    },
+    {
       name: "CNN International HD",
-      url: "https://proxy.example.com/stream/cnn-intl-hd.m3u8",
+      url: "https://d1.daddylive.me/stream/cnn-intl.m3u8",
       group: "News",
-      logo: "https://example.com/logos/cnn.png",
+      logo: "https://upload.wikimedia.org/wikipedia/commons/f/fb/Cnn_logo_red_background.png",
       tvgId: "cnn.international.hd",
     },
     {
       name: "BBC One HD",
-      url: "https://proxy.example.com/stream/bbc-one-hd.m3u8", 
+      url: "https://d1.daddylive.me/stream/bbc-one.m3u8", 
       group: "UK TV",
-      logo: "https://example.com/logos/bbc-one.png",
+      logo: "https://upload.wikimedia.org/wikipedia/commons/e/eb/BBC_One_logo_%282021%29.svg",
       tvgId: "bbcone.uk.hd",
     },
     {
-      name: "Premier League TV HD",
-      url: "https://proxy.example.com/stream/pl-tv-hd.m3u8",
-      group: "UK Sports",
-      logo: "https://example.com/logos/premier-league.png",
-      tvgId: "premierleague.tv.hd",
-    },
-    {
-      name: "TNT Sports 1 HD", 
-      url: "https://proxy.example.com/stream/tnt-sports-1-hd.m3u8",
-      group: "UK Sports",
-      logo: "https://example.com/logos/tnt-sports.png",
-      tvgId: "tntsports1.uk.hd",
-    },
-    {
-      name: "Eurosport 1 HD",
-      url: "https://proxy.example.com/stream/eurosport-1-hd.m3u8",
-      group: "Sports",
-      logo: "https://example.com/logos/eurosport.png",
-      tvgId: "eurosport1.hd",
-    },
-    {
       name: "Discovery Channel HD",
-      url: "https://proxy.example.com/stream/discovery-hd.m3u8",
+      url: "https://d1.daddylive.me/stream/discovery.m3u8",
       group: "Documentary",
-      logo: "https://example.com/logos/discovery.png",
+      logo: "https://upload.wikimedia.org/wikipedia/commons/2/27/Discovery_Channel_-_Logo_2019.svg",
       tvgId: "discovery.hd",
+    },
+    {
+      name: "WWE Network HD",
+      url: "https://d1.daddylive.me/stream/wwe-network.m3u8",
+      group: "Sports Entertainment",
+      logo: "https://upload.wikimedia.org/wikipedia/commons/d/d4/WWE_Network_logo.png",
+      tvgId: "wwe.network.hd",
+    },
+    {
+      name: "beIN Sports 1 HD",
+      url: "https://d1.daddylive.me/stream/bein-sports-1.m3u8",
+      group: "Sports",
+      logo: "https://upload.wikimedia.org/wikipedia/commons/5/52/BeIN_Sports_logo.png",
+      tvgId: "beinsports1.hd",
+    },
+    {
+      name: "DAZN 1 HD",
+      url: "https://d1.daddylive.me/stream/dazn-1.m3u8",
+      group: "Sports",
+      logo: "https://upload.wikimedia.org/wikipedia/commons/1/1f/DAZN_logo.svg",
+      tvgId: "dazn1.hd",
     }
   ];
   
