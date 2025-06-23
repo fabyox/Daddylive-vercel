@@ -18,7 +18,6 @@ If you've ever wanted to:
 
 ## 💡 What It Does
 
-- 🔗 Paste a DaddyLive URL (like `https://daddylivehd.sx/stream/espn.php`)
 - 🧠 Extracts the underlying stream logic (educational only!)
 - 🧾 Lets you edit:
   - Channel name
