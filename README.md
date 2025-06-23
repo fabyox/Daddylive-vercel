@@ -1,73 +1,61 @@
-# Welcome to your Lovable project
+# 📺 DaddyLive M3U Builder
 
-## Project info
+A clean, self-hosted web app that lets you build and customize your own M3U playlists using links from DaddyLive mirrors — all with a beautiful interface and no shady third-party apps. Designed for educational use, metadata testing, and IPTV hobbyists.
 
-**URL**: https://lovable.dev/projects/b9378d2d-dff5-4237-8930-cc9242db21a6
+---
 
-## How can I edit this code?
+## 🌟 Why This Exists
 
-There are several ways of editing your application.
+If you've ever wanted to:
+- Watch live sports with minimal fuss
+- Create your **own playlist** that works in VLC, IPTV apps, or Stremio
+- Control channel metadata (names, logos, EPGs)
+- Avoid sketchy apps, fake links, or paywalls
 
-**Use Lovable**
+…then this tool is for you. No streaming, no hosting—just **clean M3U generation** based on publicly available info.
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/b9378d2d-dff5-4237-8930-cc9242db21a6) and start prompting.
+---
 
-Changes made via Lovable will be committed automatically to this repo.
+## 💡 What It Does
 
-**Use your preferred IDE**
+- 🔗 Paste a DaddyLive URL (like `https://daddylivehd.sx/stream/espn.php`)
+- 🧠 Extracts the underlying stream logic (educational only!)
+- 🧾 Lets you edit:
+  - Channel name
+  - `tvg-id` (for EPG)
+  - Logo URL
+  - Backup streams
+- ✅ Exports a ready-to-use `.m3u` file
+- ✨ Works 100% in your browser (self-hosted, no backend unless you want a proxy)
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+---
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## 🖥️ Tech Stack
 
-Follow these steps:
+| Tool       | Purpose                         |
+|------------|----------------------------------|
+| Next.js    | React-based frontend             |
+| TailwindCSS| Clean, responsive UI styling     |
+| Axios      | Fetch and parse external URLs    |
+| Cheerio    | HTML parsing (like jQuery in Node) |
+| Vercel     | 1-click deploy to the web        |
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+---
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+## 🚀 Depoly [Coming soon]
 
-# Step 3: Install the necessary dependencies.
-npm i
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+---
 
-**Edit a file directly in GitHub**
+🛡️ Disclaimer
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+This project does not host or stream any media. It does not bypass any protection or DRM. It only formats user-input URLs into .m3u format for testing and education.
+Use responsibly. Always follow your local laws and copyright regulations.
 
-**Use GitHub Codespaces**
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+——
 
-## What technologies are used for this project?
+❤️ Support & Feedback
 
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/b9378d2d-dff5-4237-8930-cc9242db21a6) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+Made with love by a curious dev who wanted to make IPTV just a little more user-friendly.
+If you found this useful, star the repo ⭐, open issues 🐛, or suggest features 🧠.
